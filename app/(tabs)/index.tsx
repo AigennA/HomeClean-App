@@ -16,7 +16,9 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Welcome! Hello Erik look at this app</ThemedText><br>
+        </br>
+        <ThemedText type="title">Just testing React-Native</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
