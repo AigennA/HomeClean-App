@@ -1,26 +1,58 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    // Brand
+    primary: '#0EA5E9',
+    primaryDark: '#0284C7',
+    primaryLight: '#E0F2FE',
+    secondary: '#10B981',
+    secondaryLight: '#D1FAE5',
+    accent: '#F59E0B',
+    accentLight: '#FEF3C7',
+    danger: '#EF4444',
+    dangerLight: '#FEE2E2',
+    success: '#22C55E',
+    successLight: '#DCFCE7',
+    // Text
+    text: '#0F172A',
+    textSecondary: '#64748B',
+    textLight: '#94A3B8',
+    // Layout
+    background: '#F8FAFC',
+    card: '#FFFFFF',
+    border: '#E2E8F0',
+    // Nav
+    tint: '#0EA5E9',
+    icon: '#64748B',
+    tabIconDefault: '#94A3B8',
+    tabIconSelected: '#0EA5E9',
+    tabBar: '#FFFFFF',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    // Brand
+    primary: '#38BDF8',
+    primaryDark: '#0EA5E9',
+    primaryLight: '#0C4A6E',
+    secondary: '#34D399',
+    secondaryLight: '#064E3B',
+    accent: '#FCD34D',
+    accentLight: '#451A03',
+    danger: '#F87171',
+    dangerLight: '#450A0A',
+    success: '#4ADE80',
+    successLight: '#052E16',
+    // Text
+    text: '#F1F5F9',
+    textSecondary: '#94A3B8',
+    textLight: '#475569',
+    // Layout
+    background: '#0F172A',
+    card: '#1E293B',
+    border: '#334155',
+    // Nav
+    tint: '#38BDF8',
+    icon: '#94A3B8',
+    tabIconDefault: '#475569',
+    tabIconSelected: '#38BDF8',
+    tabBar: '#1E293B',
   },
 };
