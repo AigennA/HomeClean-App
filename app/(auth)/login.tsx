@@ -86,7 +86,7 @@ export default function LoginScreen() {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={email}
-                onChangeText={(t) => { setEmail(t); setErrors((e) => ({ ...e, email: undefined })); }}
+                onChangeText={setEmail}
               />
             </View>
             {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
@@ -103,7 +103,7 @@ export default function LoginScreen() {
                 placeholderTextColor={Colors.light.textSecondary}
                 secureTextEntry={!showPassword}
                 value={password}
-                onChangeText={(t) => { setPassword(t); setErrors((e) => ({ ...e, password: undefined })); }}
+                onChangeText={setPassword}
               />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeBtn}>
                 <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={18} color={Colors.light.textSecondary} />

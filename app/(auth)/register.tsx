@@ -17,6 +17,48 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Colors } from '../../constants/Colors';
 import { Theme } from '../../constants/Theme';
 
+// ── Field bileşeni component dışında tanımlı (web focus bug fix) ──────────────
+interface FieldProps {
+  label: string;
+  value: string;
+  onChange: (t: string) => void;
+  placeholder: string;
+  icon: string;
+  keyboard?: string;
+  secure?: boolean;
+  showToggle?: boolean;
+  onToggle?: () => void;
+  error?: string;
+}
+
+function Field({ label, value, onChange, placeholder, icon, keyboard, secure, showToggle, onToggle, error }: FieldProps) {
+  return (
+    <View style={styles.fieldWrap}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={[styles.inputRow, error ? styles.inputError : null]}>
+        <Ionicons name={icon as any} size={18} color={Colors.light.textSecondary} style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder}
+          placeholderTextColor={Colors.light.textSecondary}
+          keyboardType={keyboard as any || 'default'}
+          autoCapitalize={keyboard === 'email-address' ? 'none' : 'words'}
+          secureTextEntry={secure && !showToggle}
+          value={value}
+          onChangeText={onChange}
+        />
+        {onToggle && (
+          <TouchableOpacity onPress={onToggle} style={styles.eyeBtn}>
+            <Ionicons name={showToggle ? 'eye-off-outline' : 'eye-outline'} size={18} color={Colors.light.textSecondary} />
+          </TouchableOpacity>
+        )}
+      </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+    </View>
+  );
+}
+
+// ── Screen ────────────────────────────────────────────────────────────────────
 export default function RegisterScreen() {
   const { register } = useAuth();
   const [name, setName] = useState('');
@@ -53,45 +95,6 @@ export default function RegisterScreen() {
     }
   }
 
-  const Field = ({
-    label,
-    value,
-    onChange,
-    placeholder,
-    icon,
-    keyboard,
-    secure,
-    fieldKey,
-    showToggle,
-    onToggle,
-  }: any) => (
-    <View style={styles.fieldWrap}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={[styles.inputRow, errors[fieldKey] ? styles.inputError : null]}>
-        <Ionicons name={icon} size={18} color={Colors.light.textSecondary} style={styles.inputIcon} />
-        <TextInput
-          style={styles.input}
-          placeholder={placeholder}
-          placeholderTextColor={Colors.light.textSecondary}
-          keyboardType={keyboard || 'default'}
-          autoCapitalize={keyboard === 'email-address' ? 'none' : 'words'}
-          secureTextEntry={secure && !showToggle}
-          value={value}
-          onChangeText={(t: string) => {
-            onChange(t);
-            setErrors((e) => ({ ...e, [fieldKey]: '' }));
-          }}
-        />
-        {onToggle && (
-          <TouchableOpacity onPress={onToggle} style={styles.eyeBtn}>
-            <Ionicons name={showToggle ? 'eye-off-outline' : 'eye-outline'} size={18} color={Colors.light.textSecondary} />
-          </TouchableOpacity>
-        )}
-      </View>
-      {errors[fieldKey] ? <Text style={styles.errorText}>{errors[fieldKey]}</Text> : null}
-    </View>
-  );
-
   return (
     <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
@@ -111,9 +114,32 @@ export default function RegisterScreen() {
 
         {/* Form */}
         <View style={styles.card}>
-          <Field label="Namn" value={name} onChange={setName} placeholder="Erik Svensson" icon="person-outline" fieldKey="name" />
-          <Field label="E-post" value={email} onChange={setEmail} placeholder="exempel@email.se" icon="mail-outline" keyboard="email-address" fieldKey="email" />
-          <Field label="Telefon" value={phone} onChange={setPhone} placeholder="070-000 00 00" icon="call-outline" keyboard="phone-pad" fieldKey="phone" />
+          <Field
+            label="Namn"
+            value={name}
+            onChange={setName}
+            placeholder="Erik Svensson"
+            icon="person-outline"
+            error={errors.name}
+          />
+          <Field
+            label="E-post"
+            value={email}
+            onChange={setEmail}
+            placeholder="exempel@email.se"
+            icon="mail-outline"
+            keyboard="email-address"
+            error={errors.email}
+          />
+          <Field
+            label="Telefon"
+            value={phone}
+            onChange={setPhone}
+            placeholder="070-000 00 00"
+            icon="call-outline"
+            keyboard="phone-pad"
+            error={errors.phone}
+          />
           <Field
             label="Lösenord"
             value={password}
@@ -123,7 +149,7 @@ export default function RegisterScreen() {
             secure
             showToggle={showPassword}
             onToggle={() => setShowPassword(!showPassword)}
-            fieldKey="password"
+            error={errors.password}
           />
 
           <TouchableOpacity
